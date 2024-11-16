@@ -8,8 +8,8 @@ export default function Gang() {
   const {setAccessToken, accessToken, isHost, setIsHost, alreadyHaveARoomId, setAlreadyHaveARoomId, userName, setUserName, messages, setMessages} = useApiContext()
   const [roomId, setRoomId] = useState(null)
   const [roomComponent, setRoomComponent] = useState(false)
-  console.log(`Room id: ${roomId}`)
-  console.log(`Already joined a room: ${alreadyHaveARoomId}`)
+  // console.log(`Room id: ${roomId}`)
+  // console.log(`Already joined a room: ${alreadyHaveARoomId}`)
   const [formData, setFormData] = useState({
     userName : '',
     host: ''
@@ -46,9 +46,12 @@ export default function Gang() {
       console.log(msg)
     })
     socket.on('receive-message', ({msg, userName}) => {
-      setMessages((prevMessages) => [...prevMessages, `${userName} : ${msg}`]);
+      setMessages((prevMessages) => {
+        const newMessages = [...prevMessages, `You: ${msg}`];
+      return newMessages.slice(-10);
+      }
+      );
 
-      
   });
    
   
@@ -57,7 +60,11 @@ export default function Gang() {
     setMessages((prevMessages) => [...prevMessages, message])
   })
     return ()=> {
-      socket.disconnect()
+        socket.off('connect')
+        socket.off('msg')
+        socket.off('receive-message')
+        socket.disconnect()
+      
     }
   }, [])
   return (
@@ -100,7 +107,7 @@ export default function Gang() {
           </div>
           <button className='bg-green-800 text-white text-3xl px-5 py-4 hover:rounded-2xl hover:text-green-800 hover:bg-white transition-all' 
             onClick={(e)=> {
-              console.log(formData)
+              
                
               setUserName(formData.userName)
               setRoomId(makeid(5))

@@ -18,7 +18,7 @@ export default function VideoPlayer({id, roomId , socket}) {
       });
 
     let player = useRef(null)
-    console.log(`room id in player is ${roomId} and username ${userName}`)
+    // console.log(`room id in player is ${roomId} and username ${userName}`)
 
     const [lastSeekTime, setLastSeekTime] = useState(0);
 
@@ -42,7 +42,13 @@ export default function VideoPlayer({id, roomId , socket}) {
       socket.on('seekTo', (time)=>{
         player.current.seekTo(time, true)
       })
-    })
+
+      return ()=> {
+        socket.off('playVideo')
+        socket.off('pauseVideo')
+        socket.off('seekTo')
+      }
+    }, [])
     const onPlay = () =>{
       if(isHost == "true"){
       socket.emit('playerStarted-host', {user: userName, room : roomId})
@@ -56,9 +62,9 @@ export default function VideoPlayer({id, roomId , socket}) {
     } 
     
     const onSeek = (event) => {
-      console.log("on seek works")
+      // console.log("on seek works")
       if(isHost == "true"){
-        console.log(Number(event.target.getCurrentTime()))
+        // console.log(Number(event.target.getCurrentTime()))
       socket.emit('seekTime-host', {time:Number(event.target.getCurrentTime()), user: userName, room: roomId})
       }
     }
