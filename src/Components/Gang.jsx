@@ -36,7 +36,7 @@ export default function Gang() {
 
   useEffect(()=>{
     console.log('useffect workeed')
-    socket = io('http://localhost:8080')
+    socket = io('https://fresh-adventurous-chocolate.glitch.me')
 
     socket.on('connect', ()=> {
       console.log('connected to server')
