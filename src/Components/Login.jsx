@@ -22,7 +22,7 @@ export default function Login({}) {
 
         var oauth2EndPoint = 'https://accounts.google.com/o/oauth2/v2/auth';
         var params = {'client_id' : '572995827614-r9rmd2mj407b4hob1g28boaip6lgvb94.apps.googleusercontent.com',
-            "redirect_uri" : 'https://musify-client-mu.vercel.app/',
+            "redirect_uri" : 'https://musify-client-mu.vercel.app',
             'response_type' : 'token',
             'scope': 'https://www.googleapis.com/auth/youtube',
             'include_granted_scopes' : 'true',
