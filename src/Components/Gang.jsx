@@ -47,7 +47,7 @@ export default function Gang() {
     })
     socket.on('receive-message', ({msg, userName}) => {
       setMessages((prevMessages) => {
-        const newMessages = [...prevMessages, `You: ${msg}`];
+        const newMessages = [...prevMessages, `${userName}: ${msg}`];
       return newMessages.slice(-10);
       }
       );
